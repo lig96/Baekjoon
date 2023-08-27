@@ -10,22 +10,9 @@ for i in range(N):
 
 
 rr, gg, bb = 0, 0, 0
-for i in range(len(mat)):
-    mat[i] = [x+y for x, y in zip(mat[i], [rr, gg, bb])]
-    r, g, b = mat[i]
-    if r > g:
-        bb = g
-    else:
-        bb = r
-    #
-    if g > b:
-        rr = b
-    else:
-        rr = g
-    #
-    if b > r:
-        gg = r
-    else:
-        gg = b
+for i in range(1, N):
+    mat[i][0] += min(mat[i-1][1], mat[i-1][2])
+    mat[i][1] += min(mat[i-1][0], mat[i-1][2])
+    mat[i][2] += min(mat[i-1][0], mat[i-1][1])
 
-print(sorted(mat[-1])[0])
+print(min(mat[-1]))
