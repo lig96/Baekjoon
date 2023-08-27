@@ -5,14 +5,13 @@ input = sys.stdin.readline
 N = int(input())
 mat = []
 for i in range(N):
-    temp = list(map(int, input().split()))
-    mat.append(temp)
+    mat.append(list(map(int, input().split())))
 
 
-rr, gg, bb = 0, 0, 0
 for i in range(1, N):
-    mat[i][0] += min(mat[i-1][1], mat[i-1][2])
-    mat[i][1] += min(mat[i-1][0], mat[i-1][2])
-    mat[i][2] += min(mat[i-1][0], mat[i-1][1])
+    a, b, c = mat[i-1]
+    mat[i][0] += min(b, c)
+    mat[i][1] += min(a, c)
+    mat[i][2] += min(a, b)
 
 print(min(mat[-1]))
