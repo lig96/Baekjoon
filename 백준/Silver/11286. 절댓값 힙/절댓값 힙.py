@@ -9,7 +9,7 @@ N = int(input())
 for _ in range(N):
     x = int(input())
     if x != 0:
-        x = x+0.1 if x < 0 else x
+        x = x+0.25 if x < 0 else x
         sign = 1 if x > 0 else -1
         heappush(heap, (abs(x), sign))
     else:
