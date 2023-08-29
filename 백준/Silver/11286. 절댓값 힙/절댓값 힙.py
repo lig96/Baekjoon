@@ -12,29 +12,20 @@ minus = []
 N = int(input())
 for _ in range(N):
     x = int(input())
-    if x != 0:
-        if x > 0:
-            heappush(plus, x)
-        else:
-            heappush(minus, -x)
+
+    if x > 0:
+        heappush(plus, x)
+    elif x < 0:
+        heappush(minus, -x)
     else:
         if plus and minus:
-            num_plus = heappop(plus)
-            num_minus = -heappop(minus)
-            if abs(num_plus) < abs(num_minus):
-                print(str(num_plus)+'\n')
-                heappush(minus, -num_minus)
-            elif abs(num_plus) > abs(num_minus):
-                print(str(num_minus)+'\n')
-                heappush(plus, num_plus)
-            elif abs(num_plus) == abs(num_minus):
-                print(str(num_minus)+'\n')
-                heappush(plus, num_plus)
+            if plus[0] < minus[0]:
+                print(str(heappop(plus))+'\n')
+            else:
+                print(str(-heappop(minus))+'\n')
         elif plus and (not minus):
-            num_plus = heappop(plus)
-            print(str(num_plus)+'\n')
+            print(str(heappop(plus))+'\n')
         elif (not plus) and minus:
-            num_minus = -heappop(minus)
-            print(str(num_minus)+'\n')
+            print(str(-heappop(minus))+'\n')
         else:
             print(str(0)+'\n')
