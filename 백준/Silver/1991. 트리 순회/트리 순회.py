@@ -1,4 +1,3 @@
-
 left = dict()
 right = dict()
 for char in range(N := int(input())):
@@ -18,9 +17,7 @@ def preorder(start):
 def inorder(start):
     if left[start].isalpha():
         inorder(left[start])
-        print(start, end='')
-    else:
-        print(start, end='')
+    print(start, end='')
     if right[start].isalpha():
         inorder(right[start])
 
