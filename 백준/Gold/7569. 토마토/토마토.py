@@ -1,4 +1,6 @@
 from collections import deque
+from sys import stdin
+input = stdin.readline
 
 
 M, N, H = map(int, input().split())
@@ -7,9 +9,9 @@ mat = [[list(map(int, input().split())) for _ in range(N)]
 # mat[H, height][N, row][M, col]
 cnt = 0
 qu = deque()
-for h in range(H):
+for m in range(M):
     for n in range(N):
-        for m in range(M):
+        for h in range(H):
             if mat[h][n][m] == 0:
                 cnt += 1
             elif mat[h][n][m] == 1:
