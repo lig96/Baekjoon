@@ -1,6 +1,7 @@
 import sys
 input = sys.stdin.readline
 
+
 ROW, COL = map(int, input().split())
 mat = [list(map(int, input().split())) for _ in range(ROW)]
 
@@ -14,7 +15,7 @@ shapes = [
 ]
 
 
-ans = -1
+ans = 0
 for _1 in range(4):
     # 오른쪽으로 90도 회전
     mat = [list(rows[::-1]) for rows in zip(*mat)]
