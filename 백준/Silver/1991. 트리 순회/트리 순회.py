@@ -1,37 +1,16 @@
-left = dict()
-right = dict()
-for char in range(N := int(input())):
-    node, leftnode, rightnode = input().split()
-    left[node] = leftnode
-    right[node] = rightnode
+N = int(input())
+dic = {a: [b, c] for a, b, c in (input().split() for _ in range(N))}
 
 
-def preorder(start):
-    print(start, end='')
-    if left[start].isalpha():
-        preorder(left[start])
-    if right[start].isalpha():
-        preorder(right[start])
+def sol(node, op):
+    if node == '.':
+        return
+
+    print(node, end='') if op == 'pre' else None
+    sol(dic[node][0], op)
+    print(node, end='') if op == 'in' else None
+    sol(dic[node][1], op)
+    print(node, end='') if op == 'post' else None
 
 
-def inorder(start):
-    if left[start].isalpha():
-        inorder(left[start])
-    print(start, end='')
-    if right[start].isalpha():
-        inorder(right[start])
-
-
-def postorder(start):
-    if left[start].isalpha():
-        postorder(left[start])
-    if right[start].isalpha():
-        postorder(right[start])
-    print(start, end='')
-
-
-preorder('A')
-print()
-inorder('A')
-print()
-postorder('A')
+[(sol('A', op), print()) for op in ['pre', 'in', 'post']]
