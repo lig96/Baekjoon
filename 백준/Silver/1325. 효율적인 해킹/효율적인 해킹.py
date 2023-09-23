@@ -9,9 +9,6 @@ for _ in range(M):
     graph[B].append(A)
 
 
-dist = [0 for _ in range(N+1)]
-
-
 def bfs(v, visited):
     cnt = 0
     qu = deque()
@@ -28,11 +25,12 @@ def bfs(v, visited):
     return cnt
 
 
+dist = [0 for _ in range(N+1)]
+
 for i in range(1, N+1):
-    visited = [False for _ in range(N+1)]
-    cnt = bfs(i, visited)
+    cnt = bfs(i, [False for _ in range(N+1)])
     dist[i] = cnt
-# print(dist)
+
 
 max_num = max(dist)
 for i, v in enumerate(dist):
