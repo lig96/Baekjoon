@@ -4,7 +4,7 @@ input = sys.stdin.readline
 
 
 def dijk(start):
-    dist_arr = [INF for _ in range(N+1)]
+    dist_arr = [int(1e9) for _ in range(N+1)]
     dist_arr[start] = 0
     heap = []
     heappush(heap, (0, start))
@@ -33,9 +33,6 @@ for _ in range(E):
 v1, v2 = map(int, input().split())
 
 
-INF = int(1e9)
-
-
 dist_1 = dijk(1)
 dist_v1 = dijk(v1)
 dist_v2 = dijk(v2)
@@ -45,4 +42,4 @@ ans2 = dist_1[2] + dist_v2[1] + dist_v1[3]
 # 1-v2, v2-v1, v1-n
 ans = min(ans1, ans2)
 
-print(-1) if ans >= INF else print(ans)
+print(-1) if ans >= int(1e9) else print(ans)
