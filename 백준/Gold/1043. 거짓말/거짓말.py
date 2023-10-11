@@ -1,19 +1,9 @@
-# union-find 방식
-
-
-def find(v):
-    if parent[v] == v:
-        pass
-    else:
-        parent[v] = find(parent[v])
-    return parent[v]
-
-
-def union(v_a, v_b):
-    a, b = find(v_a), find(v_b)
-    parent[a], parent[b] = min(a, b), min(a, b)
-    return
-
+# dfs와 유사한 구현
+# https://ku-hug.tistory.com/148
+# 1번째 파티에서 거짓말을 했다가 3번째 파티에서 들통이 나는 경우가 있다.
+# dfs에서는 일단 거짓말을 하고 나중에 return을 한다.
+# 현재 구현의 경우 라인 A에서 M만큼 반복문을 돌면서
+# 애초에 첫 파티부터 라인 B를 통해 진실을 말하게 한다.
 
 N, M = map(int, input().split())
 yes_arr = list(map(int, input().split()))[1:]
@@ -23,26 +13,20 @@ parties = [party for party in
 # array.pop(0)도 가능
 
 
-parent = [i for i in range(N+1)]
-[union(0, yes) for yes in yes_arr]
-# 인덱스를 맞추기 위해 N+1
-# 0번 인덱스는 이미 진실을 아는 사람들
+yes_set = set(yes_arr)
 
 
-for party in parties:
-    for person in party:
-        union(party[0], person)
-        # 파티의 0번째 인물과 파티의 n번째 인물
+for _ in range(M):  # 라인 A
+    for party in parties:
+        if yes_set & set(party):
+            yes_set = yes_set | set(party)
 
 
 ans = 0
 for party in parties:
-    flag = True
-    for people in party:
-        if find(0) == find(people):
-            flag = False
-
-    if flag:
+    if yes_set & set(party):
+        continue  # 라인 B
+    else:
         ans += 1
 
 
