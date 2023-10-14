@@ -1,3 +1,7 @@
+# https://leeingyun96.tistory.com/22
+# pypy 없이 올바르게 python으로 시간 초과 해결하는 방법
+
+
 import sys
 input = sys.stdin.readline
 
