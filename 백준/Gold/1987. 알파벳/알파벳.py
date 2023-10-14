@@ -1,40 +1,30 @@
-# https://leeingyun96.tistory.com/22
-# pypy 없이 올바르게 python으로 시간 초과 해결하는 방법
+# https://campkim.tistory.com/18
 
 
-import sys
-input = sys.stdin.readline
+import sys 
+from collections import deque
+input=sys.stdin.readline
+R,C = map(int, input().split())
+arr=[list(input()) for _ in range(R)]
+check=[0]*(26)
 
+dx=[1,-1,0,0]
+dy=[0,0,1,-1]
+maxi=0
 
-def dfs(graph, v, already, depth):
-    global ans
-    # visited랑 알파벳의 already랑 겹치기 때문에 필요 없음
+def dfs(x,y,cnt):
+    global maxi
+    maxi=max(cnt,maxi)
+    for i in range(4):
+        nx=x+dx[i]
+        ny=y+dy[i]
+        if nx<R and ny<C and nx>=0 and ny>=0 and check[ord(arr[nx][ny])-65]==0:
+            check[ord(arr[nx][ny])-65]=1
+            ncnt=cnt+1
+            dfs(nx,ny,ncnt)
+            check[ord(arr[nx][ny])-65]=0
 
-    r, c = v
-    stack = set()
-    stack.add((r, c, already+graph[r][c], depth))
+check[ord(arr[0][0])-65]=1
+dfs(0,0,1)
 
-    while stack:
-        nowr, nowc, nowalready, nowdepth = stack.pop()
-        ans = max(ans, nowdepth)
-
-        for i in range(4):
-            newr, newc = nowr+dr[i], nowc+dc[i]
-            if 0 <= newr < R and 0 <= newc < C and graph[newr][newc] not in nowalready:
-                stack.add((newr, newc, nowalready + graph[newr][newc], nowdepth+1))
-    return
-
-
-R, C = map(int, input().split())
-graph = [list(input().strip()) for _ in range(R)]
-
-
-ans = 0
-dr = [0, 0, 1, -1]
-dc = [1, -1, 0, 0]
-
-
-dfs(graph, (0, 0), '', 1)
-
-
-print(ans)
+print(maxi)
