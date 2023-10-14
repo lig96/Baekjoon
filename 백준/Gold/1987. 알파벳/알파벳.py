@@ -1,36 +1,29 @@
-import sys
-input = sys.stdin.readline
+# bfs + array 자체를 set로 수정 후
+from collections import deque
 
 
-def dfs(graph, v, already, depth):
-    global ans
-    # visited랑 알파벳의 already랑 겹치기 때문에 필요 없음
-
-    r, c = v
-    stack = set()
-    stack.add((r, c, already+graph[r][c], depth))
-
-    while stack:
-        nowr, nowc, nowalready, nowdepth = stack.pop()
-        ans = max(ans, nowdepth)
+def bfs(original, x, y):
+    max_len = 1
+    q = set([(x, y, original[y][x])])  # set로 변경
+    while q:
+        x, y, alpha = q.pop()  # pop으로 변경
+        max_len = max(max_len, len(alpha))
 
         for i in range(4):
-            newr, newc = nowr+dr[i], nowc+dc[i]
-            if 0 <= newr < R and 0 <= newc < C and graph[newr][newc] not in nowalready:
-                stack.add((newr, newc, nowalready + graph[newr][newc], nowdepth+1))
-    return
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < c and 0 <= ny < r and original[ny][nx] not in alpha:
+                q.add((nx, ny, alpha + original[ny][nx]))  # add로 변경
+
+    return max_len
 
 
-R, C = map(int, input().split())
-graph = [list(input().strip()) for _ in range(R)]
+r, c = map(int, input().split())
+original = []
+for _ in range(r):
+    original.append(list(input()))
 
+dx = [0, 0, -1, 1]
+dy = [-1, 1, 0, 0]
 
-ans = 0
-dr = [0, 0, 1, -1]
-dc = [1, -1, 0, 0]
-
-
-dfs(graph, (0, 0), '', 1)
-
-
-print(ans)
+print(bfs(original, 0, 0))
