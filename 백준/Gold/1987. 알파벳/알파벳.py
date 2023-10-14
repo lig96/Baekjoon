@@ -1,5 +1,6 @@
 # 기존에 거쳐온 알파벳들을 저장하기 위해
 # set와 list 모두 사용 가능한데 둘 다 O(1)이지만 list가 빠르다.
+# 시간 초과의 가장 간단한 해결책은 pypy로 제출하는 것이었다.
 
 import sys
 input = sys.stdin.readline
