@@ -1,9 +1,8 @@
-
 import sys
 input = sys.stdin.readline
 
 
-def dfs(graph, v, already, detph=1):
+def dfs(graph, v, already, depth):
     global ans
     # visited랑 알파벳의 already랑 겹치기 때문에 필요 없음
 
@@ -12,18 +11,24 @@ def dfs(graph, v, already, detph=1):
     for i in range(4):
         newr, newc = r+dr[i], c+dc[i]
         if 0 <= newr < R and 0 <= newc < C and not already[ord(graph[newr][newc])]:
-            dfs(graph, (newr, newc), already, detph+1)
+            dfs(graph, (newr, newc), already, depth+1)
     already[ord(graph[r][c])] = False
 
-    # if sum(already)+1 == 26:
-    #     print(26)
+    # if depth == biggest:
+    #     print(depth)
     #     exit()
     # else:
-    ans = max(ans, detph)
+    #     ans = max(ans, depth)
+    # 조기 종료로 절약되는 시간보다
+    # 크기 비교 때문에 소모되는 시간이 긴 듯하다.
+
+    ans = max(ans, depth)
+    return
 
 
 R, C = map(int, input().split())
-graph = [list(input()) for _ in range(R)]
+graph = [list(input().strip()) for _ in range(R)]
+# biggest = len(set([x for y in graph for x in y]))
 
 
 ans = 0
@@ -31,12 +36,7 @@ dr = [0, 0, 1, -1]
 dc = [1, -1, 0, 0]
 
 
-dfs(graph, (0, 0), [False for _ in range(90+1)])
+dfs(graph, (0, 0), [False for _ in range(90+1)], 1)
 
-# for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-#     print(ord(i))
-#     # 65 포함 ~ 90 포함
 
 print(ans)
-# 재귀를 끝낸 뒤 시작점을 버린 후 ans를 갱신하기 때문에
-# 1을 더해야 한다.
