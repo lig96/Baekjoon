@@ -1,74 +1,55 @@
+def rec(r, c, r_lower, c_lower, r_upper, c_upper):
+    original_r, original_c = r, c
+
+    while c >= c_lower:
+        # 왼쪽으로 이동
+        graph[r][c] = '*'
+        c -= 1
+    else:
+        c += 1
+        c_lower += 2
+    while r < r_upper:
+        # 아래쪽으로 이동
+        graph[r][c] = '*'
+        r += 1
+    else:
+        r -= 1
+        r_upper -= 2
+    while c < c_upper:
+        # 오른쪽으로 이동
+        graph[r][c] = '*'
+        c += 1
+    else:
+        c -= 1
+        c_upper -= 2
+    while r >= r_lower:
+        # 위로 이동
+        graph[r][c] = '*'
+        r -= 1
+    else:
+        r += 1
+        r_lower += 2
+
+    if (original_r, original_c) == (r, c):
+        return
+    else:
+        rec(r, c, r_lower, c_lower, r_upper, c_upper)
+        return
+
 
 N = int(input())
+
 
 if N == 1:
     print('*')
     exit()
-elif N == 2:
-    print('*****')
-    print('*')
-    print('* ***')
-    print('* * *')
-    print('* * *')
-    print('*   *')
-    print('*****')
-    exit()
+c_upper = 1 + 4*(N-1)
+r_upper = 7 + 4*(N-2)
+graph = [[' ' for _ in range(c_upper)] for _ in range(r_upper)]
 
 
-cols = 1 + 4*(N-1)  # 4 - 13
-rows = 7 + 4*(N-2)  # 4 - 15
+rec(0, c_upper-1, 2, 0, r_upper, c_upper)
 
-graph = [[' ' for _ in range(cols)] for _ in range(rows)]
-
-
-def rec(r, c, c_low, r_low):
-    global rows, cols
-    flag = False
-    while c >= c_low:
-        graph[r][c] = '*'
-        c -= 1
-        flag = True
-    else:
-        c += 1
-        c_low += 2
-    # print(*graph, sep='\n')
-    # print('one')
-    while r < rows:
-        graph[r][c] = '*'
-        r += 1
-        flag = True
-    else:
-        r -= 1
-        rows -= 2
-    # print(*graph, sep='\n')
-    # print('two')
-    while c < cols:
-        graph[r][c] = '*'
-        c += 1
-        flag = True
-    else:
-        c -= 1
-        cols -= 2
-    # print(*graph, sep='\n')
-    # print('three')
-    while r >= r_low:
-        graph[r][c] = '*'
-        r -= 1
-        flag = True
-    else:
-        r += 1
-        r_low += 2
-    # print(*graph, sep='\n')
-    # print('four')
-    if not flag:
-        return
-    else:
-        # print(*graph, sep='\n')
-        # print('one loop')
-        rec(r, c, c_low, r_low)
-
-
-rec(0, cols-1, 0, 2)
 
 for i in graph:
     print(''.join(i).rstrip())
