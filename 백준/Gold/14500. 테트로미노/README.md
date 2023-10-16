@@ -10,6 +10,10 @@
 
 브루트포스 알고리즘, 구현
 
+### 제출 일자
+
+2023년 9월 7일 22:08:42
+
 ### 문제 설명
 
 <p>폴리오미노란 크기가 1×1인 정사각형을 여러 개 이어서 붙인 도형이며, 다음과 같은 조건을 만족해야 한다.</p>
@@ -22,7 +26,7 @@
 
 <p>정사각형 4개를 이어 붙인 폴리오미노는 테트로미노라고 하며, 다음과 같은 5가지가 있다.</p>
 
-<p style="text-align:center"><a href="https://commons.wikimedia.org/wiki/File:All_5_free_tetrominoes.svg"><img alt="" src="https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/14500/1.png" style="height:167px; width:250px"></a></p>
+<p style="text-align:center"><a href="https://commons.wikimedia.org/wiki/File:All_5_free_tetrominoes.svg"><img alt="" src="" style="height:167px; width:250px"></a></p>
 
 <p>아름이는 크기가 N×M인 종이 위에 테트로미노 하나를 놓으려고 한다. 종이는 1×1 크기의 칸으로 나누어져 있으며, 각각의 칸에는 정수가 하나 쓰여 있다.</p>
 
