@@ -1,4 +1,3 @@
-
 def is_promising(r, c):
     for prev_r, prev_c in enumerate(rows[:r]):
         # 자신보다 과거의 queen들을 순회
@@ -12,7 +11,7 @@ def is_promising(r, c):
         #     # cols 리스트를 통해 이미 검증됨
         #     # 700ms -> 640ms
         #     return False
-        if abs(r-prev_r) == abs(c-prev_c):
+        if (r-prev_r) == abs(c-prev_c):
             # 동일 대각선
             return False
     return True
