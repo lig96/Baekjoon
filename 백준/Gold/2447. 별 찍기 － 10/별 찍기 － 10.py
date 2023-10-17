@@ -1,6 +1,5 @@
-N = int(input())
-
-graph = [['*' for _ in range(N)] for _ in range(N)]
+import sys
+print = sys.stdout.write
 
 
 def rec(row, col, width):
@@ -20,8 +19,14 @@ def rec(row, col, width):
             # 678
 
 
+N = int(input())
+
+
+graph = [['*' for _ in range(N)] for _ in range(N)]
+
+
 rec(0, 0, N//3)
 
 
 for i in graph:
-    print(*i, sep='')
+    print(''.join(i)+'\n')
