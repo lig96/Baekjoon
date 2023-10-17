@@ -2,31 +2,31 @@ import sys
 print = sys.stdout.write
 
 
-def rec(row, col, width):
-    for r in range(row+width, row+2*width):
-        for c in range(col+width, col+2*width):
-            graph[r][c] = ' '
+def rec(width):
+    if width == 3:
+        return ['***',
+                '* *',
+                '***']
+    rows = rec(width//3)
+    stars = []
 
-    if width == 1:
-        return
-    else:
-        for i in [0, 1, 2, 3, 5, 6, 7, 8]:
-            row_new = row + width * (i//3)
-            col_new = col + width * (i % 3)
-            rec(row_new, col_new, width//3)
-            # 012
-            # 345
-            # 678
+    for row in rows:
+        temp = row*3
+        stars.append(temp)
+    for row in rows:
+        temp = row + ' '*(width//3) + row
+        stars.append(temp)
+    for row in rows:
+        temp = row*3
+        stars.append(temp)
+
+    return stars
 
 
 N = int(input())
 
 
-graph = [['*' for _ in range(N)] for _ in range(N)]
+ans = rec(N)
 
 
-rec(0, 0, N//3)
-
-
-for i in graph:
-    print(''.join(i)+'\n')
+print('\n'.join(ans))
