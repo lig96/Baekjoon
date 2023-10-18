@@ -1,4 +1,3 @@
-
 N = int(input())
 A = list(map(int, input().split()))
 
@@ -11,22 +10,11 @@ dp_de = [1 for _ in range(N)]
 for i in range(N):
     for prev in range(i):
         if A[i] > A[prev]:
-            temp = dp_in[prev]+1
-            if temp > dp_in[i]:
-                dp_in[i] = temp
-            # dp_in[i] = max(dp_in[i],
+            if dp_in[prev]+1 > dp_in[i]:
+                dp_in[i] = dp_in[prev]+1
         if A[-i-1] > A[-prev-1]:
-            temp = dp_de[-prev-1]+1
-            if temp > dp_de[-i-1]:
-                dp_de[-i-1] = temp
-            # dp_de[-i-1] = max(dp_de[-i-1], )
+            if dp_de[-prev-1]+1 > dp_de[-i-1]:
+                dp_de[-i-1] = dp_de[-prev-1]+1
 
 
-ans = 0
-for i in range(N):
-    temp = dp_in[i]+dp_de[i]
-    if temp > ans:
-        ans = temp
-print(ans-1)
-
-# print(max([dp_in[i]+dp_de[i] for i in range(N)])-1)
+print(max([dp_in[i]+dp_de[i] for i in range(N)])-1)
