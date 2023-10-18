@@ -1,3 +1,7 @@
+# 파이썬 내장 함수 pow은 모듈러 연산도 지원한다.
+# pow(base, exp, mod) 꼴
+# 그리고 이번 문제에서 기약분수로 변환 안 해도 된다.
+
 
 import sys
 input = sys.stdin.readline
@@ -16,7 +20,6 @@ def find(b, num):
 
     if num == 1:
         return b
-
     if num % 2 == 0:
         # 짝수라면
         temp = find(b, num//2) % X
@@ -36,25 +39,9 @@ for _ in range(M):
 
 # 풀이
     gcd_num = gcd(Si, Ni)
-    # temp = (Si * find(Ni, X-2)) % X
-    temp = (Si * pow(Ni, X-2, X)) % X
+    Si, Ni = Si//gcd_num, Ni//gcd_num
+    temp = (Si * find(Ni, X-2)) % X
     ans = (ans + temp) % X
 
 # 출력
 print(ans)
-
-
-# frac = []
-# for Si, Ni in zip(S, N):
-#     # Si, Ni = S[i], N[i]
-#     gcd_num = gcd(Si, Ni)
-#     Si, Ni = Si//gcd_num, Ni//gcd_num
-#     # temp = (Si * find(Ni, X-2)) % X
-#     temp = (Si * pow(Ni, X-2, X)) % X
-#     frac.append(temp)
-
-
-# ans = 0
-# for i in range(M):
-#     ans = (ans + frac[i]) % X
-# print(ans)
