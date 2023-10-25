@@ -1,37 +1,37 @@
-# 펌
+# S는 이진수로 표현된 집합.
+# 11010은 1, 3, 4를 뜻함.
+# x=3는 1<<3를 뜻함. 즉 1000, 8
 
 import sys
 input = sys.stdin.readline
 print = sys.stdout.write
 
 
-def BOJ11723():
-    S = 0
-    N = int(input())
-    for s in sys.stdin:
-        s = s.split()
-        order = s[0]
-        if len(s) > 1:
-            x = int(s[1])
+S = 0
+M = int(input())
 
-        if order == "add":
-            S += 1 << x
-        elif order == "remove":
-            if (S >> x) % 2:
-                S -= 1 << x
-        elif order == "check":
-            print("{}\n".format("01"[(S >> x) % 2]))
-        elif order == "toggle":
-            if (S >> x) % 2:
-                S -= 1 << x
-            else:
-                S += 1 << x
-        elif order == "all":
-            S = (1 << 21) - 1
-        elif order == "empty":
-            S = 0
 
-for _ in range(1000):
-    temp = 10*2
+for _ in range(M):
+    temp = input().split()
+    if len(temp) == 2:
+        calc, x = temp
+        x = 1 << int(x)
+    else:
+        calc = temp[0]
 
-BOJ11723()
+    if calc == 'add':
+        S = S | x
+    elif calc == 'remove':
+        S = S & (~x)
+    elif calc == 'check':
+        # if S & x:
+        #     print(1)
+        # else:
+        #     print(0)
+        print(str(int(bool(S & x)))+'\n')
+    elif calc == 'toggle':
+        S = S ^ x
+    elif calc == 'all':
+        S = (1 << 21) - 1
+    elif calc == 'empty':
+        S = 0
