@@ -11,7 +11,9 @@ def sol(s, type):
             # s = 1s[:i]+2s[i]+3s[i+1:j]+4s[j]+5s[j+1:]
             # 1, 5는 이미 회문인 게 확인이 되었으니 불필요.
             # 2, 4는 서로 다름. 3은 모름.
-            # sol(start_i, end_i)처럼 투포인터로 풀이 가능.
+
+            # 1235, 1345 방식은 시간이 낭비되고 인덱스가 분리되지만
+            # 이제는 sol(start_i, end_i)처럼 투포인터로 풀이 가능.
             sol(s[i:j], type+1)  # 23
             sol(s[i+1:j+1], type+1)  # 34
             ans.append(2)
@@ -29,4 +31,3 @@ for _ in range(T):
     sol(s, 0)
 
     print(min(ans))
-    # print(ans)
