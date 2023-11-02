@@ -10,26 +10,23 @@ for _ in range(N):
     temp = input().split()
     K, infos = temp[0], temp[1:]
 
-    now, now_depth = 'default', 0
-    now_dict = graph
+    now, now_d, now_dict = 'default', 0, graph
     for info in infos:
-        if (now, now_depth) in now_dict.keys():
-            if (info, now_depth+1) not in now_dict[(now, now_depth)].keys():
-                now_dict[(now, now_depth)][(info, now_depth+1)] = dict()
+        if (now, now_d) in now_dict.keys():
+            if (info, now_d+1) not in now_dict[(now, now_d)].keys():
+                now_dict[(now, now_d)][(info, now_d+1)] = dict()
         else:
-            now_dict[(now, now_depth)] = dict()
-            now_dict[(now, now_depth)][(info, now_depth+1)] = dict()
-        now_dict = now_dict[(now, now_depth)]
-        now, now_depth = info, now_depth+1
+            now_dict[(now, now_d)] = dict()
+            now_dict[(now, now_d)][(info, now_d+1)] = dict()
+        now, now_d, now_dict = info, now_d+1, now_dict[(now, now_d)]
 
 
 def rec(start, graph):
     if start not in graph.keys():
         return
-    for key in sorted(graph[start].keys()):
-        print('--'*(key[1]-1), key[0], sep='')
-        temp = (key[0], key[1])
-        rec(temp, graph[start])
+    for now, now_d in sorted(graph[start].keys()):
+        print('--'*(now_d-1), now, sep='')
+        rec((now, now_d), graph[start])
 
 
 rec(('default', 0), graph)
