@@ -10,7 +10,7 @@ def dfs_indegree():
     for i, v in enumerate(indegree):
         if v == 0:
             qu.append(i)
-            ans[i] = max(ans[i], D[i])
+            ans[i] = D[i]
     while qu:
         now = qu.pop()
         if now == W:
