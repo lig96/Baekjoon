@@ -1,3 +1,8 @@
+# l == r이면 안 된다는 규칙을 명시할 필요는 없다.
+# l != r에서 l == r로 이동한다면 이미 비효율적이라 dp에서 걸러진다.
+# 명시한다면 (l,r), (arr[d],r), (l,arr[d]) 모두 고려해야 한다. 
+
+
 import sys
 input = sys.stdin.readline
 
@@ -29,8 +34,6 @@ dp[0][arr[0]][0] = f(0, arr[0])
 for d in range(1, len(arr)):
     for l in range(5):
         for r in range(5):
-            if l == r:
-                continue
             if dp[arr[d]][r][d] > dp[l][r][d-1] + f(l, arr[d]):
                 dp[arr[d]][r][d] = dp[l][r][d-1] + f(l, arr[d])
             # l, r 25가지 중 r을 고정하고 l->arr[d]로 움직임
