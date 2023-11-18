@@ -22,12 +22,14 @@ landings = [int(input()) for _ in range(P)]
 
 
 parent = [i for i in range(G+1)]
+ans = 0
 for i, landing in enumerate(landings):
     can_gate = find(landing)
-    if can_gate != 0:
-        union(can_gate, can_gate-1)
-    else:
-        print(i)
+    if can_gate == 0:
         break
-else:
-    print(i+1)
+    else:
+        ans += 1
+        union(can_gate, can_gate-1)
+
+
+print(ans)
