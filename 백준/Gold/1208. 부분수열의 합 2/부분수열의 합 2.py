@@ -1,3 +1,9 @@
+# 브루트포스의 가짓수가 너무 많으면 meet in the middle로 쪼개준다.
+# 방법 1. 딕셔너리
+# 방법 2. 리스트 내에서 이분탐색
+# 방법 3. 리스트 내에서 투 포인터
+
+
 from collections import defaultdict
 
 
@@ -5,10 +11,9 @@ def rec(dict, arr, i, now_sum):
     if i == len(arr):
         dict[now_sum] += 1
         return
-    else:
-        rec(dict, arr, i+1, now_sum+arr[i])
-        rec(dict, arr, i+1, now_sum)
-        return
+    rec(dict, arr, i+1, now_sum+arr[i])
+    rec(dict, arr, i+1, now_sum)
+    return
 
 
 N, S = map(int, input().split())
