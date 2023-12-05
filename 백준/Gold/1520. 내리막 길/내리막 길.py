@@ -3,11 +3,11 @@ input = sys.stdin.readline
 
 
 def dfs(graph, r, c):
-    visited[r][c][1] = True
+    visited[r][c] = 0
 
     if r == M-1 and c == N-1:
-        visited[r][c][0] += 1
-        return visited[r][c]
+        visited[r][c] = 1
+        return 1
 
     for i in range(4):
         newr, newc = r+dr[i], c+dc[i]
@@ -16,12 +16,12 @@ def dfs(graph, r, c):
         if not (graph[newr][newc] < graph[r][c]):
             continue
 
-        if not visited[newr][newc][1]:
+        if visited[newr][newc] == -1:
             # 탐색 안 해봄
-            visited[r][c][0] += dfs(graph, newr, newc)[0]
+            visited[r][c] += dfs(graph, newr, newc)
         else:
             # 탐색 해봄
-            visited[r][c][0] += visited[newr][newc][0]
+            visited[r][c] += visited[newr][newc]
     return visited[r][c]
 
 
@@ -30,9 +30,10 @@ graph = [list(map(int, input().split())) for _ in range(M)]
 
 
 dr, dc = [0, 0, 1, -1], [1, -1, 0, 0]
-visited = [[[0, False] for _ in range(N)] for _ in range(M)]
+visited = [[-1 for _ in range(N)] for _ in range(M)]
 # ways to visit (M, N) , is_visited
 dfs(graph, 0, 0)
 
 
-print(visited[0][0][0])
+print(visited[0][0])
+# print(visited[0][0][0])
