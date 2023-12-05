@@ -3,8 +3,6 @@ input = sys.stdin.readline
 
 
 def dfs(graph, r, c):
-    global ans
-
     visited[r][c][1] = True
 
     if r == M-1 and c == N-1:
@@ -38,5 +36,3 @@ dfs(graph, 0, 0)
 
 
 print(visited[0][0][0])
-# for i in visited:
-#     print(*i)
