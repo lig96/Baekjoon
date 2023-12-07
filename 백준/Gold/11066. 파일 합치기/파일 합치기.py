@@ -1,28 +1,39 @@
-# 시간 확인용 펌
-# https://www.acmicpc.net/source/66175852
-
 import sys
-input=sys.stdin.readline
-
-t= int(input())
-for i in range(t):
-    K = int(input())  # 소설을 구성하는 장의 수
-    arr = [0]+list(map(int, input().split()))
-
-    dp = [[0 for i in range(K+1)] for j in range(K + 1)]
-    #dp[i][j] : i부터 j까지 합쳤을 때 최솟값..
-
-    for i in range(1,K+1):
-        for j in range(1,K+1): #초기값.. 연속한 숫자들에 대해서만 처리
-            if j==i+1:
-                dp[i][j]=arr[i]+arr[j]
-
-    for i in range(K-1,0,-1):
-        for j in range(1,K+1):
-            if dp[i][j]==0 and i<j:
-                dp[i][j]=min([dp[i][k]+dp[k+1][j] for k in range(i,j)])+sum(arr[i:j+1])
-
-    print(dp[1][K])
+input = sys.stdin.readline
 
 
+def sol(K, arr):
+    dp = [[-1 for _ in range(K)] for _ in range(K)]
+    # inclusive K
+    # dp[1][3] = arr[1] ~ arr[3]을 활용했을 때 최소 비용
+    # 언제나 새 값으로 갱신되기 때문에 초기값은 상관 없음
 
+    presum = [0 for _ in range(K+1)]
+    for i in range(K):
+        presum[i+1] = presum[i] + arr[i]
+
+    for i in range(K):
+        dp[i][i] = 0
+    for i in range(K-1):
+        dp[i][i+1] = arr[i] + arr[i+1]
+    for width in range(2, K):
+        for i in range(K-width):
+            # for mid in range(width):
+            #     temp_a = dp[i][i+mid]+dp[i+mid+1][i+width]
+            #     temp_b = presum[i+width+1]-presum[i]
+            #     temp = temp_a + temp_b
+            #     if temp < dp[i][i+width]:
+            #         dp[i][i+width] = temp
+            dp[i][i+width] = min(
+                dp[i][i+mid]+dp[i+mid+1][i+width] for mid in range(width)
+            ) + presum[i+width+1]-presum[i]
+
+    return dp[0][-1]
+
+
+T = int(input())
+for _ in range(T):
+    K = int(input())
+    arr = list(map(int, input().split()))
+
+    print(sol(K, arr))
