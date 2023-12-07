@@ -26,9 +26,7 @@ for _ in range(N-1):
 
 ans = [False for _ in range(N+1)]
 visited = [False for _ in range(N+1)]
-for i in range(1, N+1):
-    if not visited[i]:
-        dfs(i)
+dfs(1)  # 아무 노드에서 시작해도 무방
 
 
 print(sum(ans))
