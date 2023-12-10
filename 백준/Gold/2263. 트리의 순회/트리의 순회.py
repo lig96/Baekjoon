@@ -3,17 +3,22 @@
 # 앞부터 반복하면 왼쪽으로 치우쳐졌을 때,
 # 뒤부터 반복하면 오른쪽으로 치우쳐졌을 때 최악이다.
 # 따라서 O(1) 위해 리스트 혹은 딕셔너리를 써야 한다.
-#
 # 현재 백준에는 오른쪽으로 치우쳐진 케이스가 없어서
 # 뒤부터 반복하는 코드가 생각보다 빠르게 수행된다.
 # 앞부터 반복. pypy3 - 16_392ms
 # 뒤부터 반복. pypy3 -  3_952ms
 # 리스트.      pypy3 -   572ms
+#
+# 파이썬 인터프리터 stack에 이미 올라와있는 것들이
+# 있을 수 있으니 여유롭게 50을 더해준다.
+# 파이썬에서는 +1을 하면 오류가 나고 +2를 하면 오류가 안 났다.
+# pypy에서는 +1을 해도 오류가 안 났다.
+
 
 import sys
 input = sys.stdin.readline
 print = sys.stdout.write
-sys.setrecursionlimit(int(1e5)+2)
+sys.setrecursionlimit(int(1e5)+50)
 
 
 def rec(in_i, post_i):
