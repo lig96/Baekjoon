@@ -1,5 +1,6 @@
 # N이 클 때 길이와 수열 모두 출력하는 LIS
 
+
 from bisect import bisect_left
 import sys
 input = sys.stdin.readline
@@ -26,17 +27,17 @@ def make_dp():
 
 
 def do_print():
-    ans = set()
+    selections = set()
     target_length = len(dp)
 
     for i, v in list(enumerate(lengths))[::-1]:
         if v == target_length:
-            ans.add(left[i])
+            selections.add(left[i])
             target_length -= 1
 
-    print(str(N-len(ans))+'\n')
+    print(str(N-len(selections))+'\n')
     for v in left:
-        if v not in ans:
+        if v not in selections:
             print(str(v)+'\n')
 
     return
