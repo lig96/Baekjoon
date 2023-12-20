@@ -29,12 +29,18 @@ def do_power(graph, num):
 
 
 def do_matmul(left, right):
-    temp = [[0 for _ in range(8)] for _ in range(8)]
-    for r in range(8):
-        for c in range(8):
-            for k in range(8):
+    assert len(left[0]) == len(right)
+    R = len(left)
+    C = len(right[0])
+    K = len(left[0])  # len(right)
+
+    temp = [[0 for _ in range(C)] for _ in range(R)]
+    for r in range(R):
+        for c in range(C):
+            for k in range(K):
                 temp[r][c] += left[r][k]*right[k][c]
                 temp[r][c] %= mod
+
     return temp
 
 
@@ -57,11 +63,7 @@ prev = [[1, 0, 0, 0, 0, 0, 0, 0]]  # 이차원인 것 유의
 graph = do_power(graph, D)
 
 
-ans = [[0 for _ in range(8)]]
-for r in [0]:
-    for c in range(8):
-        for k in range(8):
-            ans[r][c] += prev[r][k]*graph[k][c]
+ans = do_matmul(prev, graph)
 
 
 print(ans[0][0])
