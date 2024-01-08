@@ -1,7 +1,7 @@
 # 태그: 게임 이론
 
 # Case 1:
-# dist <=m
+# dist <= m
 # 자명하게 정답은 First 1
 
 # Case 2:
