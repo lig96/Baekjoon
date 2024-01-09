@@ -1,49 +1,42 @@
-# https://code-angie.tistory.com/21
-# 백준허브 자동 깃허브 커밋이 오류나서
-# 제출 확인용 코드
-
-
-from collections import defaultdict, deque
 import sys
+sys.setrecursionlimit(int(3e4))
 input = sys.stdin.readline
 
 
-def sol():
-    v, e = map(int, input().split())
-    color = [0]*(v+1)  # 칠해줄 색을 담을 곳
-    g = defaultdict(list)
-    # 양방향 그래프
-    for _ in range(e):
-        x, y = map(int, input().split())
-        g[x].append(y)
-        g[y].append(x)
+def dfs(v, group):
+    global ans
 
-    # 모든 노드 탐색
-    for i in range(1, v+1):
-        if color[i]:  # 이미 지나온 노드면 넘어가기
-            continue
-        # 새로 접한 노드면 색을 칠해주고 인접한 노드들 탐색
-        color[i] = 1
-
-        q = deque([i])
-        while q:
-            now = q.popleft()
-            next_color = color[now] % 2 + 1  # 다음 노드의 색 (색은 1 혹은 2)
-
-            for next in g[now]:
-                # 아직 방문하지 않았다면
-                if not color[next]:
-                    color[next] = next_color
-                    q.append(next)
-
-                # 만약 인접 노드가 현재 노드와 같은 색이라면 이분 그래프가 아님
-                elif color[next] != next_color:
-                    return "NO"
-
-    # 끝까지 이상 없으면 아직은 이분 그래프
-    return "YES"
+    if visited[v] == -1:
+        # 방문이 안 되었다면
+        visited[v] = group  # group 초기값 False
+        for node in edges[v]:
+            temp = dfs(node, not group)  # False, True 번갈아
+            if temp == 'NO':
+                return 'NO'
+        return 'YES'
+    else:
+        # 방문이 되었다면
+        if visited[v] == group:
+            return 'YES'
+        else:
+            return 'NO'
 
 
-k = int(input())
-for _ in range(k):
-    print(sol())
+K = int(input())
+for _ in range(K):
+    V, E = map(int, input().split())
+    edges = [[] for _ in range(V+1)]
+    for _ in range(E):
+        u, v = list(map(int, input().split()))
+        edges[u].append(v)
+        edges[v].append(u)
+
+    visited = [-1 for _ in range(V+1)]
+
+    for start_v in range(1, V+1):
+        if visited[start_v] == -1:
+            ans = dfs(start_v, False)
+            if ans == 'NO':
+                break
+
+    print(ans)
