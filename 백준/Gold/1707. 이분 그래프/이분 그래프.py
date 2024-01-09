@@ -1,11 +1,14 @@
+# 전역 변수 ans 문자열을 따로 두지 않고
+# 지금처럼 함수의 return 값을 활용할 수도 있다.
+# 구현이 어렵지만 약간이나마 빠르고 함수 내에서 해결이 가능하다.
+
+
 import sys
 sys.setrecursionlimit(int(3e4))
 input = sys.stdin.readline
 
 
 def dfs(v, group):
-    global ans
-
     if visited[v] == -1:
         # 방문이 안 되었다면
         visited[v] = group  # group 초기값 False
