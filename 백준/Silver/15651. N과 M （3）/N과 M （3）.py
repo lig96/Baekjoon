@@ -5,7 +5,7 @@ print = sys.stdout.write
 
 def rec(depth, temp):
     if depth == M:
-        print(' '.join(map(str, temp))+'\n')
+        ans.append(' '.join(map(str, temp)))
         return
 
     for i in range(1, N+1):
@@ -18,4 +18,10 @@ def rec(depth, temp):
 N, M = map(int, input().split())
 
 
+ans = []
+
+
 rec(0, [])
+
+
+print('\n'.join(ans))
