@@ -1,3 +1,7 @@
+# N의 범위가 작아서
+# 이분탐색 대신 선형탐색도 가능
+
+
 import sys
 input = sys.stdin.readline
 
