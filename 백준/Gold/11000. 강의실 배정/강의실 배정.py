@@ -7,7 +7,7 @@ N = int(input())
 lectures = [tuple(map(int, input().split())) for _ in range(N)]
 
 
-lectures.sort(key=lambda x: (x[0], x[1]))
+lectures.sort(key=lambda x: x[0])  # x[1]은 상관없음
 times = []  # 현재 교실에서 진행중인 수업의 끝나는 시간들
 heappush(times, -1)  # 교실 1개는 무조건 있음
 
