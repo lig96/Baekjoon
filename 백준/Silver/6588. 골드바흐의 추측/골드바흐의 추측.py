@@ -1,5 +1,3 @@
-# 바로 아래 pypy랑 동일하고 python으로 제출 언어만 변경
-
 import sys
 input = sys.stdin.readline
 print = sys.stdout.write
