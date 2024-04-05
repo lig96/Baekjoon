@@ -130,7 +130,9 @@ MODE = ['for_bj_submission', 'for_local_verification'
         ][0]
 
 if MODE == 'for_bj_submission':
-    # T = 105 # 조건 안 씀
+    T = 105  # (1+V+2E) + (1+2Q) = 105
+    TARGET = 1_000_000  # V^3 = 1_030_301
+
     V = 101  # V > 100
     E = 0
     Q = 1
@@ -143,6 +145,12 @@ if MODE == 'for_bj_submission':
             if E:
                 adj_mat[s][e] = 1  # w = 1로 고정
                 E -= 1
+    # _
+    #  _
+    #   _
+    #    _
+    # 형태.
+    # 플로이드워셜은 간선이 아예 없어도 됨.
 
     print(V)
     for s in range(V):
@@ -151,7 +159,8 @@ if MODE == 'for_bj_submission':
         print(len(edges), end=' ')
         print(' '.join(map(lambda x: ' '.join(map(str, x)), edges)))
     print(Q)
-    print('0 1')
+    for _ in range(Q):
+        print('0 1')
 elif MODE == 'for_local_verification':
     # ModifiedDijkstra()
     # FloydWarshall()
