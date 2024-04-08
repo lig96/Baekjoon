@@ -7,8 +7,8 @@
 
 # https://www.acmicpc.net/problem/7147
 # 데이터 만들기 8
-# A = 도박1. 시간 초과 X
-# B = 재귀백트래킹. 시간 초과
+# A = 재귀백트래킹. 시간 초과 X
+# B = 도박2. 시간 초과
 # T = 3004
 
 
@@ -31,7 +31,7 @@ def RecursiveBacktracking():
 
         for j in range(len(AdjList[u+1])):
             counter += 1
-            if counter > 1000000:
+            if counter > 1_000_000:
                 return
 
             v = AdjList[u+1][j]
@@ -76,7 +76,7 @@ MODE = ['for_bj_submission', 'for_local_verification'
 
 if MODE == 'for_bj_submission':
     T = 3004  # (2+2E) = 3004
-    TARGET = 1_000_000  #
+    TARGET = 1_000_000  # 3511
 
     V = 999  # 70 < V < 1000
     E = 1501  # 1501로 고정
@@ -89,7 +89,9 @@ if MODE == 'for_bj_submission':
                 adj_mat[s][e] = True
                 adj_mat[e][s] = True
                 used_edges += 1
-    # 최대한 완전그래프가 되게끔.
+    # A-to-all, B-to-all로 간선을 몰아주고
+    # C, D, E 간에는 연결되지 않아서 그대로
+    # 색깔 3, 4, 5을 배정할 수 있게끔
 
     print(f'{V} {E}')
     for s in range(V):
@@ -97,5 +99,7 @@ if MODE == 'for_bj_submission':
             if adj_mat[s][e]:
                 print(f'{s} {e}')
 elif MODE == 'for_local_verification':
+    # import sys
+    # sys.setrecursionlimit(int(2e4))
     # RecursiveBacktracking()
     pass
