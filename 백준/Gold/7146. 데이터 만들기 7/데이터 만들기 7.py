@@ -76,7 +76,7 @@ MODE = ['for_bj_submission', 'for_local_verification'
 
 if MODE == 'for_bj_submission':
     T = 3004  # (2+2E) = 3004
-    TARGET = 1_000_000  #
+    TARGET = 1_000_000  # 23_087_204
 
     V = 71  # 70 < V < 1000
     E = 1501  # 1501로 고정
@@ -90,6 +90,9 @@ if MODE == 'for_bj_submission':
                 adj_mat[e][s] = True
                 used_edges += 1
     # 최대한 완전그래프가 되게끔.
+    # 완전 그래프가 된다면 X=V일 때가 최소이고
+    # 정확한 counter는 몰라도
+    # X=V-1일 때보다는 클 거라고 예상 가능.
 
     print(f'{V} {E}')
     for s in range(V):
