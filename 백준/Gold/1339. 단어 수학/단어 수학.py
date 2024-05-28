@@ -1,3 +1,14 @@
+# 단어의 개수를 N, 알파벳의 종류를 X, 수의 최대 길이를 Y라 하자
+#
+# 방법 1: 그리디
+# O(N * (X + Y)) = O(2e2)
+#
+# 방법 2: 완전탐색
+# O(X! * N * Y) = O(3e8)
+# 파이썬에서는 시간 초과지만 C에서는 됨
+# dict/map보다 배열이 더 빠름
+
+
 import sys
 input = sys.stdin.readline
 
