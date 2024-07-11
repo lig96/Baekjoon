@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(int(2e5))
+sys.setrecursionlimit(int(1e5)+100)
 
 
 def dfs1(x):
@@ -33,17 +33,28 @@ def dfs2(x, is_first_turn):
     if is_first_turn:
         for child in children:
             if dp1[child]:
-                # E를 포함한 경로
-                dfs2(child, not is_first_turn)
-    else:
-        for child in children:
-            if not dp1[child]:
-                # E를 포함하지 않은 경로가 존재하면
+                # E를 포함한 경로가 있다면 선택
                 dfs2(child, not is_first_turn)
                 break
         else:
-            # break가 안 됐다는 건 E를 포함하지 않은 경로가 없다는 뜻
-            dfs2(children[0], not is_first_turn)
+            # E 방문 불가능이 확정이니 최적화로 조기 종료
+            # if children:
+            #     dfs2(children[0], not is_first_turn)
+            # else:
+            #     pass
+            pass
+    else:
+        for child in children:
+            if not dp1[child]:
+                # E를 포함하지 않은 경로가 있다면 선택
+                # E 방문 불가능이 확정이니 최적화로 조기 종료
+                # dfs2(child, not is_first_turn)
+                break
+        else:
+            if children:
+                dfs2(children[0], not is_first_turn)
+            else:
+                pass
     return
 
 
@@ -58,12 +69,13 @@ for _ in range(N-1):
 dp1 = [False for _ in range(N+1)]
 # dp[i] = S가 루트인 트리에서 i 정점 아래로 갈 때 E를 함유하고 있는지 여부
 visited = [False for _ in range(N+1)]
-dfs1(S)  # S를 루트로 놓은 트리, dp 만드는 용
+dfs1(S)  # S를 루트로 놓은 트리
+# dp 만드는 용
 
 
 ans = 'Second'
 visited = [False for _ in range(N+1)]
-dfs2(S, True)
+dfs2(S, True)  # S를 루트로 놓은 트리
 # 순회하며 최적 행동
 
 
