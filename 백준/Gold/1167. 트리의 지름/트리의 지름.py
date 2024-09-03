@@ -1,37 +1,43 @@
-
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(int(1e5)+100)
+
+
+def dfs(graph, startx, startc):
+    visited[startx] = startc
+    for nxt, nxt_c in graph[startx]:
+        if visited[nxt] != -1:
+            continue
+        dfs(graph, nxt, visited[startx]+nxt_c)
+    return
+
+
+def find():
+    max_dist = max(visited)
+    v = visited.index(max_dist)
+    return v, max_dist
 
 
 V = int(input())
 graph = [[] for _ in range(V+1)]
 for _ in range(V):
     temp = list(map(int, input().split()))
-    for i in range(1, len(temp)-2, 2):
-        graph[temp[0]].append((temp[i], temp[i+1]))
+    s = temp[0]
+    for i in range(1, len(temp)-1, 2):
+        e, c = temp[i], temp[i+1]
+        graph[s].append((e, c))
 
 
-def dfs(v, dist, far):
-    visited[v] = True
-
-    for node in graph[v]:
-        if not visited[node[0]]:
-            dfs(node[0], dist+node[1], far)
-
-    if dist > far[1]:
-        far[0] = v
-        far[1] = dist
-
-
-start = 1
-visited = [False for _ in range(V+1)]
-far_v1 = [-1, -1]
-dfs(start, 0, far_v1)
-# from 1 to far_v1[0], dist = far_v1[1]
-visited = [False for _ in range(V+1)]
-far_v2 = [-1, -1]
-dfs(far_v1[0], 0, far_v2)
-# from far_v1[0] to far_v2[0], dist = far_v2[1]
+startx = 1
+visited = [-1 for _ in range(V+1)]
+dfs(graph, startx, 0)
+endx, _ = find()
+# from 1 to a, dist = _
+startx = endx
+visited = [-1 for _ in range(V+1)]
+dfs(graph, startx, 0)
+_, diameter = find()
+# from a to b, dist = diameter
 
 
-print(far_v2[1])
+print(diameter)
