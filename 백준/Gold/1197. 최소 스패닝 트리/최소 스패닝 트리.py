@@ -1,37 +1,37 @@
 import sys
 input = sys.stdin.readline
-
-
-def kruskal():
-    ans = 0
-    for start, end, c in graph:
-        if find(start) != find(end):
-            union(start, end)
-            ans += c
-    return ans
-
-
-def find(v):
-    if parent[v] != v:
-        parent[v] = find(parent[v])
-    return parent[v]
+sys.setrecursionlimit(int(2e4))
 
 
 def union(a, b):
-    parent_a = find(a)
-    parent_b = find(b)
-    if parent_a < parent_b:
-        parent[parent_b] = parent_a
+    a, b = find(a), find(b)
+    if a < b:
+        parent[b] = a
     else:
-        parent[parent_a] = parent_b
+        parent[a] = b
+    return
+
+
+def find(x):
+    if x != parent[x]:
+        parent[x] = find(parent[x])
+    return parent[x]
 
 
 V, E = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(E)]
+edges = [tuple(map(int, input().split())) for _ in range(E)]
 
 
-graph.sort(key=lambda x: x[2])
-parent = [i for i in range(V+1)]  # 자기 자신
+edges.sort(key=lambda x: x[2])
+parent = [i for i in range(V+1)]
 
 
-print(kruskal())
+ans = 0
+for s, e, c in edges:
+    if find(s) == find(e):
+        continue
+    union(s, e)
+    ans += c
+
+
+print(ans)
