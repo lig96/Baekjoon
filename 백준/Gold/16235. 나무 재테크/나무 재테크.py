@@ -1,0 +1,77 @@
+# 봄여름가울겨울 함수 4개
+# 1차원 배열에 (r, c, z). PyPy3 - 1172 ms
+# N*N 2차원 배열에 z. PyPy3 - 752 ms
+#
+# 상수 커팅, 함수 합치기
+# N*N 2차원 배열에 z. PyPy3 - 지금
+
+
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+
+def do_spring_summer():
+    for r, c in range_rc:
+        now_trees = trees[r][c]
+        for _ in range(len(now_trees)):
+            z = now_trees.popleft()
+            if land[r][c] >= z:
+                land[r][c] -= z
+                now_trees.append(z+1)
+            else:
+                dead_trees[r][c] += z//2
+    return
+
+
+def do_fall():
+    for r, c in range_rc:
+        now_trees = trees[r][c]
+        for z in now_trees:
+            # 자기 자신에게는 나무가 안 생기기 때문에 임시 복사 없이 해도 됨
+            if z % 5 != 0:
+                continue
+            for i in range(8):
+                newr, newc = r+dr[i], c+dc[i]
+                if not (0 <= newr < N and 0 <= newc < N):
+                    continue
+                trees[newr][newc].appendleft(1)  # appendleft, 오름차순 유지
+    return
+
+
+def do_summer_winter():
+    for r, c in range_rc:
+        land[r][c] += A_arr[r][c] + dead_trees[r][c]
+        dead_trees[r][c] = 0
+    return
+
+
+N, M, K = map(int, input().split())
+land = [[5 for _ in range(N)] for _ in range(N)]  # 시작값 5
+A_arr = [list(map(int, input().split())) for _ in range(N)]
+trees = [[deque() for _ in range(N)] for _ in range(N)]
+for _ in range(M):
+    x, y, z = map(int, input().split())
+    trees[x-1][y-1].append(z)  # zero-indexing
+# 첫 입력은 동일 위치에 나무가 생기지 않기 때문에
+# 위치마다 다른 데큐면 정렬할 필요 없음
+dead_trees = [[0 for _ in range(N)] for _ in range(N)]  # 시작값 5
+
+
+dr, dc = [-1, -1, -1, 0, 0, 1, 1, 1], [-1, 0, 1, -1, 1, -1, 0, 1]
+range_rc = [(r, c) for r in range(N) for c in range(N)]
+# 제너레이터는 일회용이라 안 됨
+
+
+for _ in range(K):
+    do_spring_summer()
+    do_fall()
+    do_summer_winter()
+
+
+ans = 0
+for r, c in range_rc:
+    ans += len(trees[r][c])
+
+
+print(ans)
