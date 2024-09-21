@@ -1,40 +1,57 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(int(500*500)+100)
 
 
-def dfs(graph, r, c):
-    # 방문 처리를 위해 0
-    visited[r][c] = 0
+def dfs(r, c, ways):
+    if (r, c) == (R-1, C-1):
+        visited[r][c] = 1
+    else:
+        visited[r][c] = 0
 
-    if r == M-1 and c == N-1:
-        # 실제로 도달했으니 +1
-        visited[r][c] += 1
-        return visited[r][c]
+    # print((r, c))
+    # print(*visited, sep='\n')
 
+    temp = []
     for i in range(4):
         newr, newc = r+dr[i], c+dc[i]
-        if not (0 <= newr < M and 0 <= newc < N):
+        if not (0 <= newr < R and 0 <= newc < C):
             continue
-        if not (graph[newr][newc] < graph[r][c]):
+        if board[r][c] <= board[newr][newc]:
             continue
 
+        # print((newr, newc, visited[r][c]))
+
         if visited[newr][newc] == -1:
-            # 탐색 안 해봄
-            visited[r][c] += dfs(graph, newr, newc)
+            temp.append(dfs(newr, newc, ways))
         else:
-            # 탐색 해봄
-            visited[r][c] += visited[newr][newc]
+            temp.append(visited[newr][newc])
+    visited[r][c] += sum(temp)
+
+    # if (r, c) == (0, 0):
+    #     print((newr, newc, visited[r][c]), 'hi')
+    # print(*visited, sep='\n')
+
     return visited[r][c]
 
 
-M, N = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(M)]
+R, C = map(int, input().split())
+board = [list(map(int, input().split())) for _ in range(R)]
+# print(*board, sep='\n')
 
 
 dr, dc = [0, 0, 1, -1], [1, -1, 0, 0]
-visited = [[-1 for _ in range(N)] for _ in range(M)]
-# -1이면 미방문, else면 방문했고 (M, N) 도달 경우의 수
-dfs(graph, 0, 0)
 
 
+visited = [[-1 for _ in range(C)] for _ in range(R)]
+dfs(0, 0, 1)
+
+
+# print()
 print(visited[0][0])
+# print(*visited, sep='\n')
+
+# [1, 1, 1, 2, 1]
+# [1, -1, -1, 1, 1]
+# [1, -1, -1, 1, -1]
+# [1, 1, 2, 1, 1]
