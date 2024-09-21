@@ -3,16 +3,15 @@ input = sys.stdin.readline
 sys.setrecursionlimit(int(500*500)+100)
 
 
-def dfs(r, c, ways):
+def dfs(r, c):
+    visited[r][c] = 0
+    # 도달 가능 여부는 모르지만
+    # 덧셈의 항등원
     if (r, c) == (R-1, C-1):
-        visited[r][c] = 1
-    else:
-        visited[r][c] = 0
+        visited[r][c] += 1
+        # 도달했으니 +1
+        return visited[r][c]
 
-    # print((r, c))
-    # print(*visited, sep='\n')
-
-    temp = []
     for i in range(4):
         newr, newc = r+dr[i], c+dc[i]
         if not (0 <= newr < R and 0 <= newc < C):
@@ -20,38 +19,25 @@ def dfs(r, c, ways):
         if board[r][c] <= board[newr][newc]:
             continue
 
-        # print((newr, newc, visited[r][c]))
-
         if visited[newr][newc] == -1:
-            temp.append(dfs(newr, newc, ways))
+            visited[r][c] += dfs(newr, newc)
         else:
-            temp.append(visited[newr][newc])
-    visited[r][c] += sum(temp)
-
-    # if (r, c) == (0, 0):
-    #     print((newr, newc, visited[r][c]), 'hi')
-    # print(*visited, sep='\n')
+            visited[r][c] += visited[newr][newc]
 
     return visited[r][c]
 
 
 R, C = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(R)]
-# print(*board, sep='\n')
 
 
 dr, dc = [0, 0, 1, -1], [1, -1, 0, 0]
 
 
 visited = [[-1 for _ in range(C)] for _ in range(R)]
-dfs(0, 0, 1)
+# -1이면 미방문,
+# -1이 아니라면 방문이 가능하고 (R-1, C-1) 도달의 경우의 수
+dfs(0, 0)
 
 
-# print()
 print(visited[0][0])
-# print(*visited, sep='\n')
-
-# [1, 1, 1, 2, 1]
-# [1, -1, -1, 1, 1]
-# [1, -1, -1, 1, -1]
-# [1, 1, 2, 1, 1]
