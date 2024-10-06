@@ -1,5 +1,5 @@
-# x -> x를 0으로 초기화 안 하고 해도 됨
-# 오히려 이게 더 논리에 맞음
+# x -> x를 0으로 초기화 안 하고 해도 되기는 한데
+# 하는 게 정석인 듯
 
 
 import sys
@@ -8,10 +8,14 @@ sys_print = sys.stdout.write
 
 
 def fw():
+    for v in range(V):
+        dists[v][v] = 0
+
     for mid in range(V):
         for i in range(V):
             for j in range(V):
                 dists[i][j] = min(dists[i][j], dists[i][mid]+dists[mid][j])
+
     return dists
 
 
@@ -26,7 +30,12 @@ for _ in range(E):
 fw()
 
 
-min_v = min(dists[i][i] for i in range(V))
+min_v = INF
+for i in range(V):
+    for j in range(V):
+        if i == j:
+            continue
+        min_v = min(min_v, dists[i][j]+dists[j][i])
 
 
-print(min_v if min_v != float('inf') else -1)
+print(min_v if min_v != INF else -1)
