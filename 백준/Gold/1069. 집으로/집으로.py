@@ -22,11 +22,11 @@ ans.append(
 # cnt_l-1만큼 직선으로 점프 + 2번을 V모양으로 점프 + 0걷기
 ans.append(
     T*(max(cnt_l-1, 0)+2) + 1*(0)
-)
+)  # cnt_l+1과는 다름. DIST>=<D 조건 분기를 해야 같음.
 # 0점프 + 나머지만큼 직선으로 걷기
 ans.append(
     T*(0) + 1*(DIST)
 )
 
 
-print(float(min(ans)))
+print(min(ans))
