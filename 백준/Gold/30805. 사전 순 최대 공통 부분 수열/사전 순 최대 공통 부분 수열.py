@@ -8,9 +8,11 @@
 # 2. 그리디
 # 한 CS가 A의 가장 큰 원소를 첫 원소로 갖는다면,
 # 그 CS는 A의 다른 원소를 첫 원소로 갖는 모든 CS보다 크다.
+# 그리디하게 가장 큰 원소부터 확인하면 된다.
 # A의 i번째로 큰 원소가 B에 속한지를 확인하여 CS의 j번째 원소를 찾은 뒤
 # i를 늘려가며 j번째 원소를 찾으면 된다.
 # 이 과정에서 A와 B의 가용 범위는 줄어든다.
+# 투포인터와 값의 범위가 작으니 계수 정렬을 쓰면 O((100+N+M) + (N+M))도 가능하다.
 
 
 import sys
@@ -49,7 +51,7 @@ def sol_LCS(N, A_arr, M, B_arr) -> list[int]:
             else:
                 if A_arr[n] == B_arr[m]:
                     dp[n][m] = outcome(dp[n-1][m-1], A_arr[n])
-                    # dp[n][m] = max(dp[n-1][m-1][0:i]+[A_arr[n]]
+                    # dp[n][m] = max(dp[n-1][m-1][:i]+[A_arr[n]]
                     #                for i in range(len(dp[n-1][m-1])+1))
                 else:
                     dp[n][m] = max(dp[n-1][m],
@@ -58,18 +60,31 @@ def sol_LCS(N, A_arr, M, B_arr) -> list[int]:
 
 
 def sol_greedy(N, A_arr, M, B_arr) -> list[int]:
+    A_arr = [(v, i) for i, v in enumerate(A_arr)]
+    B_arr = [(v, i) for i, v in enumerate(B_arr)]
+    sorted_A = sorted(A_arr, key=lambda x: (-x[0], x[1]))
+    sorted_B = sorted(B_arr, key=lambda x: (-x[0], x[1]))
     A_start, B_start = 0, 0
+    l, r = 0, 0
     ans = []
-    while A_start < N and B_start < M:
-        sorted_A = sorted(A_arr[A_start:], reverse=True)  # 내림차순
-        for v in sorted_A:
-            if v in B_arr[B_start:]:
-                B_i = B_arr[B_start:].index(v) + B_start
-                # 일치하는 첫 원소의 원래 배열에서의 위치
-                B_start = B_i+1
-                ans.append(v)
-                break
-        A_start += A_arr[A_start:].index(v)+1
+    while l < N and r < M:
+        A_v, A_i = sorted_A[l]
+        B_v, B_i = sorted_B[r]
+        if A_i < A_start:
+            l += 1
+            continue
+        elif B_i < B_start:
+            r += 1
+            continue
+        if A_v == B_v:
+            ans.append(A_v)
+            l += 1
+            r += 1
+            A_start, B_start = A_i+1, B_i+1
+        elif A_v > B_v:
+            l += 1
+        elif A_v < B_v:
+            r += 1
     return ans
 
 
@@ -85,4 +100,4 @@ ans = sol_greedy(N, A_arr, M, B_arr)
 
 print(len(ans))
 if len(ans) != 0:
-    print(*ans)
+    sys_print(' '.join(map(str, ans)))
