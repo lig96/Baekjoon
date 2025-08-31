@@ -1,20 +1,25 @@
+# 최종
+
+
 import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(int(1e4)+20)
 
 
 def sol_greedy():
+    # 좌표 압축 X
     def change_covered(l, r):
         ''' coverd에 (l, r)을 추가하되
         기존 좌표와 겹치거나 맞닿는 부분이 있다면 서로 이어붙이고
         기존 좌표는 삭제한다.'''
         start, end = l, r
         for cl, cr in reversed(covered[::]):
-            if end < cl-1 or start > cr+1:
-                continue
-            start = min(cl, start)
-            end = max(cr, end)
-            covered.remove((cl, cr))
+            # if not (end < cl-1 or start > cr+1): # 약 60ms
+            # if ((cl-1) <= end <= cr) or (cl <= start <= (cr+1)): # 4000ms 이상
+            if ((cl-1) <= end) and (start <= (cr+1)):  # 약 60ms
+                start = min(cl, start)
+                end = max(cr, end)
+                covered.remove((cl, cr))
         covered.append((start, end))
         return
     covered = []
@@ -35,16 +40,19 @@ def sol_greedy():
 
 
 def sol_segtree():
+    # 아마 좌표 압축 O
     raise NotImplementedError
     return
 
 
 def sol_heap():
+    # 아마 좌표 압축 X
     raise NotImplementedError
     return
 
 
 def sol_naive():
+    # 아마 좌표 압축 O
     board = [None for _ in range(max_after+1)]
     for i, (l, r) in enumerate(posters_after):
         board[l:r+1] = [i for _ in range(r+1-l)]
@@ -53,6 +61,7 @@ def sol_naive():
 
 
 def sol_unionfind():
+    # 아마 좌표 압축 O
     def union(a, b):
         a, b = find(a), find(b)
         parent[a] = b
