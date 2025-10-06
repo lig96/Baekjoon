@@ -28,8 +28,7 @@ for v in arr:
 
 ans = 0
 cnt = [0 for _ in range(M)]
-# psum[0]을 포함해야 한다.
-for v in psum:
+for v in psum:  # psum[0]을 포함해야 한다.
     ans += cnt[v]
     cnt[v] += 1
 # for문이 끝난 뒤 길이 M짜리 cnt 배열을 돌며
@@ -37,4 +36,4 @@ for v in psum:
 # 1+2+3.... = (n+1) * n / 2 = nC2이기 때문이다.
 
 
-print(ans)
+sys.stdout.write(str(ans))
